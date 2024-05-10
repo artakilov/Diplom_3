@@ -20,11 +20,6 @@ def driver(request):
 
 @pytest.fixture(scope='function')
 def user():
-    data = hlprs.create_new_user()
-    payload_for_test = {
-        "email": data[0],
-        "password": data[1],
-        "name": data[2]
-    }
-    yield payload_for_test
-    hlprs.delete_user(data[3])
+    payload_user = hlprs.create_user()
+    yield payload_user
+    hlprs.delete_user(payload_user["response"].json()["accessToken"])

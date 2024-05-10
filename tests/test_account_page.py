@@ -1,39 +1,45 @@
-from locators.main_page_locators import TestLocatorsMainPage as TLmp
-from locators.account_page_locators import TestLocatorsAccountPage as TLap
-from locators.login_page_locators import TestLocatorsLoginPage as TLlp
 from pages.account_page import AccountPage
 import allure
 import constants as cnst
+from pages.login_page import LoginPage
 
 
 class TestAccountPage:
+
+    # тест 004 - позитивный, переход в личный кабинет по клику на кнопку «Личный кабинет» в хедере
+    @allure.title('Проверка перехода в личный кабинет по клику на кнопку «Личный кабинет» в хедере')
+    @allure.description('Авторизуемся пользователем и кликаем на кнопку "Личный кабинет" в хедере. '
+                        'Проверяем, что выполнился переход в личный кабинет')
+    def test_go_to_account_page(self, driver, user):
+        driver.get(cnst.URL + cnst.EP_LOGIN)
+        page = AccountPage(driver)
+        login_page = LoginPage(driver)
+        login_page.login_user(user["email"], user["password"])
+        page.click_to_button_personal_account()
+        page.check_go_to_personal_account_page()
 
     # тест 005 - позитивный, переход в раздел «История заказов» личного кабинета
     @allure.title('Проверка перехода в раздел "История заказов" личного кабинета')
     @allure.description('Авторизуемся пользователем, переходим в личный кабинет и кликаем на раздел "История заказов". '
                         'Проверяем, что выполнился переход в раздел "История заказов"')
     def test_go_to_account_page_history(self, driver, user):
-        driver.get(cnst.URL)
+        driver.get(cnst.URL + cnst.EP_LOGIN)
         page = AccountPage(driver)
-        page.user_login(TLmp.BUTTON_PERSONAL_ACCOUNT, TLlp.FIELD_EMAIL, TLlp.FIELD_PASSWORD,
-                        TLlp.BUTTON_ENTRANCE, user["email"], user["password"])
-        page.click_to_element_with_wait(TLmp.BUTTON_PERSONAL_ACCOUNT)
-        page.click_to_element_with_wait(TLap.LABEL_HISTORY_ORDERS)
-
-        assert "link_active" in page.find_element_with_wait(TLap.LABEL_HISTORY_ORDERS).get_attribute("class"), \
-            f'Переход в раздел "История заказов" по клику на раздел "История заказов" не выполнился!'
+        login_page = LoginPage(driver)
+        login_page.login_user(user["email"], user["password"])
+        page.click_to_button_personal_account()
+        page.click_to_label_history_orders()
+        page.check_go_to_account_page_history()
 
     # тест 006 - позитивный, выход из аккаунта в личном кабинете
     @allure.title('Проверка выхода из аккаунта в личном кабинета')
     @allure.description('Авторизуемся пользователем, переходим в личный кабинет и кликаем на раздел "Выход". '
                         'Проверяем, что выполнился выход из аккаунта')
     def test_go_to_account_page_exit(self, driver, user):
-        driver.get(cnst.URL)
+        driver.get(cnst.URL + cnst.EP_LOGIN)
         page = AccountPage(driver)
-        page.user_login(TLmp.BUTTON_PERSONAL_ACCOUNT, TLlp.FIELD_EMAIL, TLlp.FIELD_PASSWORD,
-                        TLlp.BUTTON_ENTRANCE, user["email"], user["password"])
-        page.click_to_element_with_wait(TLmp.BUTTON_PERSONAL_ACCOUNT)
-        page.click_to_element_with_wait(TLap.LABEL_EXIT)
-
-        assert "Войти" in page.find_element_with_wait(TLlp.BUTTON_ENTRANCE).text, \
-            f'Выход из аккаунта по клику на раздел "Выход" не выполнился!'
+        login_page = LoginPage(driver)
+        login_page.login_user(user["email"], user["password"])
+        page.click_to_button_personal_account()
+        page.click_to_label_exit()
+        page.check_go_to_account_page_exit()
