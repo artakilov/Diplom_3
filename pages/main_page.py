@@ -1,11 +1,27 @@
 import allure
 from pages.base_page import BasePage
-from locators.order_feed_page_locators import TestLocatorsOrderFeedPage as TLofp
 from locators.main_page_locators import TestLocatorsMainPage as TLmp
 import data_for_tests as dft
+import constants as cnst
 
 
 class MainPage(BasePage):
+
+    @allure.step('Переходим на глвную страницу')
+    def go_to_main_page(self):
+        self.go_to_url(cnst.URL)
+
+    @allure.step('Нажимаем кнопку Конструктор в хедере')
+    def click_to_button_constructor(self):
+        self.click_to_element_with_wait(TLmp.BUTTON_CONSTRUCTOR)
+
+    @allure.step('Нажимаем кнопку Личный кабинет в хедере')
+    def click_to_button_personal_account(self):
+        self.click_to_element_with_wait(TLmp.BUTTON_PERSONAL_ACCOUNT)
+
+    @allure.step('Нажимаем кнопку Лента Заказов в хедере')
+    def click_to_button_order_feed(self):
+        self.click_to_element_with_wait(TLmp.BUTTON_ORDER_FEED)
 
     @allure.step('Нажимаем на Ингредиент')
     def click_to_ingredient(self):
@@ -24,8 +40,8 @@ class MainPage(BasePage):
         self.drug_and_drop_element(TLmp.IMG_INGREDIENT, TLmp.AREA_OF_ORDER)
 
     @allure.step('Проверяем переход на страницу Лента заказов')
-    def check_go_to_order_feed_page(self):
-        actually = self.get_text_of_element(TLofp.LABEL_ORDER_FEED)
+    def check_go_to_order_feed_page(self, text):
+        actually = text
         expected = dft.text_of_label_order_feed
         assert actually == expected, \
             f'На странице ожидалась надпись: "{expected}", получена: "{actually}"'

@@ -1,6 +1,6 @@
 import allure
-import constants as cnst
 from pages.forgot_password_page import ForgotPasswordPage
+from pages.reset_password_page import ResetPasswordPage
 
 
 class TestForgotPasswordPage:
@@ -10,8 +10,9 @@ class TestForgotPasswordPage:
     @allure.description('На странице восстановления пароля вводим email и кликаем на кнопку "Восстановить". '
                         'Проверяем, что выполнился переход на страницу сброса пароля')
     def test_input_email_and_click_button_restore(self, driver):
-        driver.get(cnst.URL + cnst.EP_FORGOT_PASSWORD)
         page = ForgotPasswordPage(driver)
+        reset_password_page = ResetPasswordPage(driver)
+        page.go_to_forgot_password_page()
         page.set_text_to_field_email()
         page.click_to_button_restore()
-        page.check_go_to_reset_password_page()
+        page.check_go_to_reset_password_page(reset_password_page.get_text_of_button_save())

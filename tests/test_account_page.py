@@ -1,7 +1,7 @@
-from pages.account_page import AccountPage
 import allure
-import constants as cnst
+from pages.account_page import AccountPage
 from pages.login_page import LoginPage
+from pages.main_page import MainPage
 
 
 class TestAccountPage:
@@ -11,11 +11,12 @@ class TestAccountPage:
     @allure.description('Авторизуемся пользователем и кликаем на кнопку "Личный кабинет" в хедере. '
                         'Проверяем, что выполнился переход в личный кабинет')
     def test_go_to_account_page(self, driver, user):
-        driver.get(cnst.URL + cnst.EP_LOGIN)
         page = AccountPage(driver)
         login_page = LoginPage(driver)
+        main_page = MainPage(driver)
+        login_page.go_to_login_page()
         login_page.login_user(user["email"], user["password"])
-        page.click_to_button_personal_account()
+        main_page.click_to_button_personal_account()
         page.check_go_to_personal_account_page()
 
     # тест 005 - позитивный, переход в раздел «История заказов» личного кабинета
@@ -23,11 +24,12 @@ class TestAccountPage:
     @allure.description('Авторизуемся пользователем, переходим в личный кабинет и кликаем на раздел "История заказов". '
                         'Проверяем, что выполнился переход в раздел "История заказов"')
     def test_go_to_account_page_history(self, driver, user):
-        driver.get(cnst.URL + cnst.EP_LOGIN)
         page = AccountPage(driver)
         login_page = LoginPage(driver)
+        main_page = MainPage(driver)
+        login_page.go_to_login_page()
         login_page.login_user(user["email"], user["password"])
-        page.click_to_button_personal_account()
+        main_page.click_to_button_personal_account()
         page.click_to_label_history_orders()
         page.check_go_to_account_page_history()
 
@@ -36,10 +38,11 @@ class TestAccountPage:
     @allure.description('Авторизуемся пользователем, переходим в личный кабинет и кликаем на раздел "Выход". '
                         'Проверяем, что выполнился выход из аккаунта')
     def test_go_to_account_page_exit(self, driver, user):
-        driver.get(cnst.URL + cnst.EP_LOGIN)
         page = AccountPage(driver)
         login_page = LoginPage(driver)
+        main_page = MainPage(driver)
+        login_page.go_to_login_page()
         login_page.login_user(user["email"], user["password"])
-        page.click_to_button_personal_account()
+        main_page.click_to_button_personal_account()
         page.click_to_label_exit()
-        page.check_go_to_account_page_exit()
+        page.check_go_to_account_page_exit(login_page.get_text_of_button_entrance())

@@ -4,16 +4,16 @@ from selenium.webdriver.common.by import By
 class TestLocatorsOrderFeedPage:
 
     # надпись "Лента Заказов"
-    LABEL_ORDER_FEED = By.XPATH, '//*[@id="root"]/div/main/div/h1'
-    # заказ в ленте заказов
-    ORDER_IN_ORDER_FEED = By.XPATH, '//*[@id="root"]/div/main/div/div/ul/li[1]/a'
+    LABEL_ORDER_FEED = By.XPATH, '//h1[contains(text(), "Лента заказов")]'
+    # последний заказ в ленте заказов
+    ORDER_IN_ORDER_FEED = By.XPATH, '//ul[contains(@class, "OrderFeed_list")]/li[last()-49]'
     # счетчик всех заказаов
-    COUNTER_ALL_ORDERS = By.XPATH, '//*[@id="root"]/div/main/div/div/div/div[2]/p[2]'
+    COUNTER_ALL_ORDERS = By.XPATH, '//div[contains(@class, "undefined")]/p[contains(@class, "OrderFeed_number")]'
     # счетчик сегодняшних заказаов
-    COUNTER_TODAY_ORDERS = By.XPATH, '//*[@id="root"]/div/main/div/div/div/div[3]/p[2]'
+    COUNTER_TODAY_ORDERS = By.XPATH, '//p[contains(text(), "сегодня")]/following-sibling::p[contains(@class, "digits")]'
     # область для заказов "В работе" с номером заказа
-    MEMO_IN_WORK_ORDER = By.XPATH, '//*[@id="root"]/div/main/div/div/div/div[1]/ul[2]/li'
+    MEMO_IN_WORK_ORDER = By.XPATH, '//ul[contains(@class, "OrderFeed_orderListReady")]/li'
     # номер последнего заказа в ленте заказов
-    NUMBER_ORDER = By.XPATH, '//*[@id="root"]/div/main/div/div/ul/li[1]/a/div[1]/p[1]'
+    NUMBER_ORDER = By.XPATH, '//ul[contains(@class, "list")]/li[last()-49]/a/div/p[contains(@class, "digits")]'
     # надпись "состав" в окне деталей заказа
-    LABEL_COMPOUND = By.XPATH, '//*[@id="root"]/div/section[2]/div[1]/div/p[3]'
+    LABEL_COMPOUND = By.XPATH, '//p[contains(text(), "Cостав")]'

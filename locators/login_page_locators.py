@@ -4,10 +4,10 @@ from selenium.webdriver.common.by import By
 class TestLocatorsLoginPage:
 
     # ссылка "Восстановить пароль"
-    LINK_RESTORE_PASSWORD = By.XPATH, '/html/body/div/div/main/div/div/p[2]/a'
+    LINK_RESTORE_PASSWORD = By.XPATH, '//a[contains(@href, "/forgot-password")]'
     # поле "email"
-    FIELD_EMAIL = By.XPATH, '//*[@id="root"]/div/main/div/form/fieldset[1]/div/div/input'
+    FIELD_EMAIL = By.XPATH, '//input[contains(@name, "name")]'
     # поле "Пароль"
-    FIELD_PASSWORD = By.XPATH, '//*[@id="root"]/div/main/div/form/fieldset[2]/div/div/input'
+    FIELD_PASSWORD = By.XPATH, '//input[contains(@name, "Пароль")]'
     # кнопка "Войти"
-    BUTTON_ENTRANCE = By.XPATH, '//*[@id="root"]/div/main/div/form/button'
+    BUTTON_ENTRANCE = By.XPATH, '//button[contains(text(), "Войти")]'

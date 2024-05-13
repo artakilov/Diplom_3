@@ -3,8 +3,8 @@ from selenium.webdriver.common.by import By
 
 class TestLocatorsAccountPage:
     # раздел "Профиль"
-    LABEL_PROFILE = By.XPATH, '//*[@id="root"]/div/main/div/nav/ul/li[1]/a'
+    LABEL_PROFILE = By.XPATH, '//a[contains(text(), "Профиль")]'
     # раздел "История заказов"
-    LABEL_HISTORY_ORDERS = By.XPATH, '//*[@id="root"]/div/main/div/nav/ul/li[2]/a'
+    LABEL_HISTORY_ORDERS = By.XPATH, '//a[contains(text(), "История заказов")]'
     # раздел "Выход"
-    LABEL_EXIT = By.XPATH, '//*[@id="root"]/div/main/div/nav/ul/li[3]/button'
+    LABEL_EXIT = By.XPATH, '//button[contains(text(), "Выход")]'

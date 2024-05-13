@@ -3,13 +3,20 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver import ActionChains
 import allure
-from locators.base_page_locators import TestLocatorsBasePage as TLbp
 
 
 class BasePage:
 
     def __init__(self, driver):
         self.driver = driver
+
+    @allure.step('Получаем url текущей страницы')
+    def get_current_url(self):
+        return self.driver.current_url
+
+    @allure.step('Переходим на страницу по url')
+    def go_to_url(self, url):
+        self.driver.get(url)
 
     @allure.step('Ожидаем появление элемента {locator}')
     def wait_presence_element(self, locator):
@@ -25,7 +32,7 @@ class BasePage:
 
     @allure.step('Ищем элемент {locator} c ожиданием его появления и видимости и возвращаем его')
     def find_element_with_wait(self, locator):
-#        self.wait_presence_element(locator)
+        self.wait_presence_element(locator)
         self.wait_visibility_element(locator)
         return self.driver.find_element(*locator)
 
@@ -57,16 +64,3 @@ class BasePage:
         action_chains = ActionChains(self.driver)
         action_chains.drag_and_drop(self.find_element_with_wait(locator_a),
                                     self.find_element_with_wait(locator_b)).perform()
-
-    # Методы кнопок хедера размещены здесь, так как одинаковы для всех страниц (локаторы в base_page_locators)
-    @allure.step('Нажимаем кнопку Конструктор в хедере')
-    def click_to_button_constructor(self):
-        self.click_to_element_with_wait(TLbp.BUTTON_CONSTRUCTOR)
-
-    @allure.step('Нажимаем кнопку Личный кабинет в хедере')
-    def click_to_button_personal_account(self):
-        self.click_to_element_with_wait(TLbp.BUTTON_PERSONAL_ACCOUNT)
-
-    @allure.step('Нажимаем кнопку Лента Заказов в хедере')
-    def click_to_button_order_feed(self):
-        self.click_to_element_with_wait(TLbp.BUTTON_ORDER_FEED)

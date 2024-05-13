@@ -1,6 +1,5 @@
-from pages.order_feed_page import OrderFeedPage
 import allure
-import constants as cnst
+from pages.order_feed_page import OrderFeedPage
 import helpers as hlprs
 
 
@@ -11,8 +10,8 @@ class TestOrderFeedPage:
     @allure.description('В ленте заказов кликаем на заказ. '
                         'Проверяем, что появилось всплывающее окно с деталями')
     def test_open_details_of_order(self, driver):
-        driver.get(cnst.URL + cnst.EP_OREDR_FEED)
         page = OrderFeedPage(driver)
+        page.go_to_order_feed_page()
         page.click_to_order_in_order_feed()
         page.check_open_details_of_order()
 
@@ -21,8 +20,8 @@ class TestOrderFeedPage:
     @allure.description('Запоминаем текущее значение счетчика, авторизуемся, создаем новый заказ. '
                         'Проверяем, что значение счетчика увеличлось')
     def test_counter_all_orders_increased(self, driver, user):
-        driver.get(cnst.URL + cnst.EP_OREDR_FEED)
         page = OrderFeedPage(driver)
+        page.go_to_order_feed_page()
         counter_now = int(page.get_text_of_counter_all_orders())
         hlprs.create_order(user["response"].json()["accessToken"])
         page.check_counter_all_orders_increased(counter_now)
@@ -32,8 +31,8 @@ class TestOrderFeedPage:
     @allure.description('Запоминаем текущее значение счетчика, авторизуемся, создаем новый заказ. '
                         'Проверяем, что значение счетчика увеличлось')
     def test_counter_today_orders_increased(self, driver, user):
-        driver.get(cnst.URL + cnst.EP_OREDR_FEED)
         page = OrderFeedPage(driver)
+        page.go_to_order_feed_page()
         counter_now = int(page.get_text_of_counter_today_orders())
         hlprs.create_order(user["response"].json()["accessToken"])
         page.check_counter_today_orders_increased(counter_now)
@@ -43,8 +42,8 @@ class TestOrderFeedPage:
     @allure.description('Авторизуемся, создаем новый заказ, запоминаем его номер, переходим в ленту заказов. '
                         'Проверяем, что номер заказа после его оформления появился в разделе "В работе"')
     def test_number_of_order_in_work(self, driver, user):
-        driver.get(cnst.URL + cnst.EP_OREDR_FEED)
         page = OrderFeedPage(driver)
+        page.go_to_order_feed_page()
         order = hlprs.create_order(user["response"].json()["accessToken"])
         page.check_number_of_order_in_work(order)
 
@@ -53,7 +52,7 @@ class TestOrderFeedPage:
     @allure.description('Авторизуемся, создаем заказ, выбираем номер последнего заказа в "Истории заказов". '
                         'Проверяем, что заказ отображается на странице "Лента заказов"')
     def test_number_order_in_order_feed(self, driver, user):
-        driver.get(cnst.URL + cnst.EP_OREDR_FEED)
         page = OrderFeedPage(driver)
+        page.go_to_order_feed_page()
         order = hlprs.create_order(user["response"].json()["accessToken"])
         page.check_number_of_order_in_order_feed(order)

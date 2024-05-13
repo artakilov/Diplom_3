@@ -1,7 +1,6 @@
 import allure
 from pages.base_page import BasePage
 from locators.account_page_locators import TestLocatorsAccountPage as TLap
-from locators.login_page_locators import TestLocatorsLoginPage as TLlp
 import data_for_tests as dft
 
 
@@ -24,14 +23,14 @@ class AccountPage(BasePage):
 
     @allure.step('Проверяем переход в раздел История заказов Личного кабинета')
     def check_go_to_account_page_history(self):
-        actually = self.driver.current_url
+        actually = self.get_current_url()
         expected = dft.url_of_label_history_order
         assert actually == expected, \
             f'Переход в раздел "История заказов" по клику на раздел "История заказов" не выполнился!'
 
     @allure.step('Проверяем Выход из Личного кабинета')
-    def check_go_to_account_page_exit(self):
-        actually = self.get_text_of_element(TLlp.BUTTON_ENTRANCE)
+    def check_go_to_account_page_exit(self, text):
+        actually = text
         expected = dft.text_of_button_entrance
         assert actually == expected, \
             f'Выход из аккаунта по клику на раздел "Выход" не выполнился!'

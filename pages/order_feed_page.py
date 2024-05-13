@@ -2,9 +2,14 @@ import allure
 from pages.base_page import BasePage
 from locators.order_feed_page_locators import TestLocatorsOrderFeedPage as TLofp
 import data_for_tests as dft
+import constants as cnst
 
 
 class OrderFeedPage(BasePage):
+
+    @allure.step('Переходим на глвную страницу')
+    def go_to_order_feed_page(self):
+        self.go_to_url(cnst.URL + cnst.EP_OREDR_FEED)
 
     @allure.step('Нажимаем на Заказ в Ленте заказов')
     def click_to_order_in_order_feed(self):
@@ -25,6 +30,10 @@ class OrderFeedPage(BasePage):
     @allure.step('Получаем Номер заказа')
     def get_text_of_number_order(self):
         return self.get_text_of_element(TLofp.NUMBER_ORDER)
+
+    @allure.step('Получаем текст Лента заказов')
+    def get_text_of_label_order_feed(self):
+        return self.get_text_of_element(TLofp.LABEL_ORDER_FEED)
 
     @allure.step('Проверяем открытие описания Заказа')
     def check_open_details_of_order(self):
@@ -48,7 +57,8 @@ class OrderFeedPage(BasePage):
     @allure.step('Проверяем наличие номера оформленного заказа в разделе В работе')
     def check_number_of_order_in_work(self, order):
         i = 0
-        while i == 0:
+        while i < 243:
+            i += 1
             if str(order) in self.get_text_of_memo_orders_in_work():
                 i = order
         assert order == i, \
